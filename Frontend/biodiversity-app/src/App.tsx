@@ -12,6 +12,7 @@ import { LampContainer } from './components/lamp';
 import { FloatingNav } from './components/floating-nav';
 import { GridBackground } from './components/grid-background';
 import { EnhancedLoading } from './components/enhanced-loading';
+import { WavyBackground } from './components/wavy-background';
 
 // Icons
 import { 
@@ -145,22 +146,16 @@ function App() {
   ];
 
   return (
-    <div 
-      className="min-h-screen text-white relative overflow-hidden"
-      style={{ 
-        backgroundColor: '#000000',
-        minHeight: '100vh',
-        color: 'white'
-      }}
+    <WavyBackground 
+      className="text-white w-full"
+      containerClassName="w-full min-h-screen relative"
+      style={{ backgroundColor: '#000000', minHeight: '100vh' }}
     >
       <FloatingNav />
+      
       {/* Neon Green Border Glow - More Prominent */}
       <div 
-        className="absolute inset-0 -z-20 pointer-events-none"
-        style={{ backgroundColor: '#000000' }}
-      ></div>
-      <div 
-        className="absolute top-0 left-0 right-0 z-0 pointer-events-none"
+        className="absolute top-0 left-0 right-0 z-20 pointer-events-none"
         style={{ 
           height: '2px', 
           backgroundColor: '#10B981',
@@ -168,7 +163,7 @@ function App() {
         }}
       ></div>
       <div 
-        className="absolute bottom-0 left-0 right-0 z-0 pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none"
         style={{ 
           height: '2px', 
           backgroundColor: '#10B981',
@@ -176,7 +171,7 @@ function App() {
         }}
       ></div>
       <div 
-        className="absolute top-0 bottom-0 left-0 z-0 pointer-events-none"
+        className="absolute top-0 bottom-0 left-0 z-20 pointer-events-none"
         style={{ 
           width: '2px', 
           backgroundColor: '#10B981',
@@ -184,17 +179,17 @@ function App() {
         }}
       ></div>
       <div 
-        className="absolute top-0 bottom-0 right-0 z-0 pointer-events-none"
+        className="absolute top-0 bottom-0 right-0 z-20 pointer-events-none"
         style={{ 
           width: '2px', 
           backgroundColor: '#10B981',
           boxShadow: '0 0 10px #10B981'
         }}
       ></div>
-      
+
       {/* Corner Accents */}
       <div 
-        className="absolute top-0 left-0 z-0 pointer-events-none"
+        className="absolute top-0 left-0 z-20 pointer-events-none"
         style={{
           width: '80px',
           height: '80px',
@@ -204,7 +199,7 @@ function App() {
         }}
       ></div>
       <div 
-        className="absolute top-0 right-0 z-0 pointer-events-none"
+        className="absolute top-0 right-0 z-20 pointer-events-none"
         style={{
           width: '80px',
           height: '80px',
@@ -214,7 +209,7 @@ function App() {
         }}
       ></div>
       <div 
-        className="absolute bottom-0 left-0 z-0 pointer-events-none"
+        className="absolute bottom-0 left-0 z-20 pointer-events-none"
         style={{
           width: '80px',
           height: '80px',
@@ -224,7 +219,7 @@ function App() {
         }}
       ></div>
       <div 
-        className="absolute bottom-0 right-0 z-0 pointer-events-none"
+        className="absolute bottom-0 right-0 z-20 pointer-events-none"
         style={{
           width: '80px',
           height: '80px',
@@ -252,11 +247,13 @@ function App() {
       />
       
       <div 
-        className="relative z-50 mx-auto px-8 py-12"
+        className="relative z-50 mx-auto px-8 w-full"
         style={{ 
           maxWidth: '1400px',
           position: 'relative',
-          zIndex: 50
+          zIndex: 50,
+          paddingTop: '4rem',
+          paddingBottom: '3rem'
         }}
       >
         {/* Header */}
@@ -267,7 +264,8 @@ function App() {
           className="text-center relative z-50"
           style={{ 
             marginBottom: '4rem',
-            padding: '2rem 0'
+            padding: '2rem 0',
+            marginTop: '2rem'
           }}
         >
           <h1 
@@ -601,7 +599,7 @@ function App() {
           </motion.div>
         )}
       </div>
-    </div>
+    </WavyBackground>
   );
 }
 
