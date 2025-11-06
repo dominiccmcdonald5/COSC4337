@@ -1,13 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
-import { IconHome, IconChartBar, IconFileMusic, IconBrain } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
+import { IconHome, IconFileMusic, IconUsers } from "@tabler/icons-react";
 
 export const FloatingNav = () => {
   const navItems = [
-    { name: "Home", icon: <IconHome className="h-5 w-5" />, link: "#" },
-    { name: "Analysis", icon: <IconChartBar className="h-5 w-5" />, link: "#analysis" },
-    { name: "Audio", icon: <IconFileMusic className="h-5 w-5" />, link: "#upload" },
-    { name: "AI", icon: <IconBrain className="h-5 w-5" />, link: "#ai" },
+    { name: "Home", icon: <IconHome className="h-5 w-5" />, link: "/" },
+    { name: "About Bioacoustics", icon: <IconFileMusic className="h-5 w-5" />, link: "/about-bioacoustics" },
+    { name: "About Us", icon: <IconUsers className="h-5 w-5" />, link: "/about-us" },
   ];
 
   return (
@@ -27,33 +27,36 @@ export const FloatingNav = () => {
         }}
         className="flex items-center space-x-8"
       >
-        {navItems.map((item, idx) => (
-          <motion.a
+        {navItems.map((item) => (
+          <motion.div
             key={item.name}
-            href={item.link}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-3 rounded-full transition-all duration-200"
-            style={{
-              color: '#10B981',
-              textDecoration: 'none',
-              paddingLeft: '16px',
-              paddingRight: '16px',
-              paddingTop: '12px',
-              paddingBottom: '12px'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-            }}
           >
-            <div className="w-6 h-6 flex items-center justify-center">
-              {item.icon}
-            </div>
-            <span className="text-base font-medium">{item.name}</span>
-          </motion.a>
+            <Link
+              to={item.link}
+              className="flex items-center space-x-3 rounded-full transition-all duration-200"
+              style={{
+                color: '#10B981',
+                textDecoration: 'none',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <div className="w-6 h-6 flex items-center justify-center">
+                {item.icon}
+              </div>
+              <span className="text-base font-medium">{item.name}</span>
+            </Link>
+          </motion.div>
         ))}
       </div>
     </motion.div>
