@@ -4,10 +4,10 @@ import { IconHome, IconChartBar, IconFileMusic, IconBrain } from "@tabler/icons-
 
 export const FloatingNav = () => {
   const navItems = [
-    { name: "Home", icon: <IconHome className="h-4 w-4" />, link: "#" },
-    { name: "Analysis", icon: <IconChartBar className="h-4 w-4" />, link: "#analysis" },
-    { name: "Audio", icon: <IconFileMusic className="h-4 w-4" />, link: "#upload" },
-    { name: "AI", icon: <IconBrain className="h-4 w-4" />, link: "#ai" },
+    { name: "Home", icon: <IconHome className="h-5 w-5" />, link: "#" },
+    { name: "Analysis", icon: <IconChartBar className="h-5 w-5" />, link: "#analysis" },
+    { name: "Audio", icon: <IconFileMusic className="h-5 w-5" />, link: "#upload" },
+    { name: "AI", icon: <IconBrain className="h-5 w-5" />, link: "#ai" },
   ];
 
   return (
@@ -23,9 +23,9 @@ export const FloatingNav = () => {
           backdropFilter: 'blur(10px)',
           border: '1px solid rgba(16, 185, 129, 0.3)',
           borderRadius: '50px',
-          padding: '8px 20px'
+          padding: '16px 32px'
         }}
-        className="flex items-center space-x-6"
+        className="flex items-center space-x-8"
       >
         {navItems.map((item, idx) => (
           <motion.a
@@ -33,10 +33,14 @@ export const FloatingNav = () => {
             href={item.link}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-200"
+            className="flex items-center space-x-3 rounded-full transition-all duration-200"
             style={{
               color: '#10B981',
-              textDecoration: 'none'
+              textDecoration: 'none',
+              paddingLeft: '16px',
+              paddingRight: '16px',
+              paddingTop: '12px',
+              paddingBottom: '12px'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
@@ -45,8 +49,10 @@ export const FloatingNav = () => {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
           >
-            {item.icon}
-            <span className="text-sm font-medium hidden sm:block">{item.name}</span>
+            <div className="w-6 h-6 flex items-center justify-center">
+              {item.icon}
+            </div>
+            <span className="text-base font-medium">{item.name}</span>
           </motion.a>
         ))}
       </div>

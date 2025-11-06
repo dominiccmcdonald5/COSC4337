@@ -39,7 +39,12 @@ export const FileUpload = ({
     onChange && onChange(newFiles);
   };
 
-  const handleClick = () => {
+  const handleClick = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    fileInputRef.current?.click();
+  };
+
+  const handleContainerClick = () => {
     fileInputRef.current?.click();
   };
 
@@ -55,7 +60,7 @@ export const FileUpload = ({
   return (
     <div className="w-full" {...getRootProps()}>
       <motion.div
-        onClick={handleClick}
+        onClick={handleContainerClick}
         whileHover="animate"
         className="p-10 group/file block rounded-lg cursor-pointer w-full relative overflow-hidden"
       >
@@ -71,11 +76,29 @@ export const FileUpload = ({
           <GridPattern />
         </div>
         <div className="flex flex-col items-center justify-center">
-          <p className="relative z-20 font-sans font-bold text-base" style={{ color: 'white' }}>
+          <p className="relative z-20 font-sans font-bold text-base mb-6" style={{ color: 'white' }}>
             Upload audio file
           </p>
-          <p className="relative z-20 font-sans font-normal text-base mt-2" style={{ color: 'white' }}>
-            Drag or drop your ecosystem audio recording here or click to browse
+          
+          {/* Spotify-Style Choose File Button */}
+          <button
+            onClick={handleClick}
+            className="rounded-full bg-[#10B981] font-normal text-white tracking-normal uppercase transform hover:scale-105 hover:bg-[#34D399] transition-colors duration-200 flex items-center justify-center space-x-2 mb-6 text-sm"
+            style={{
+              paddingLeft: '16px',
+              paddingRight: '16px',
+              paddingTop: '8px',
+              paddingBottom: '8px'
+            }}
+          >
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+            </svg>
+            <span className="text-sm font-normal">SELECT AUDIO FILE</span>
+          </button>
+          
+          <p className="relative z-20 font-sans font-normal text-sm" style={{ color: 'white' }}>
+            Or drag and drop your ecosystem audio recording here
           </p>
           <div className="relative w-full mt-10 max-w-xl mx-auto">
             {files.length > 0 &&
