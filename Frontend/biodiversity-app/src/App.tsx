@@ -145,46 +145,7 @@ function App() {
       ></div>
 
       {/* Corner Accents */}
-      <div 
-        className="absolute top-0 left-0 z-20 pointer-events-none"
-        style={{
-          width: '80px',
-          height: '80px',
-          borderTop: '2px solid #10B981',
-          borderLeft: '2px solid #10B981',
-          opacity: 0.8
-        }}
-      ></div>
-      <div 
-        className="absolute top-0 right-0 z-20 pointer-events-none"
-        style={{
-          width: '80px',
-          height: '80px',
-          borderTop: '2px solid #10B981',
-          borderRight: '2px solid #10B981',
-          opacity: 0.8
-        }}
-      ></div>
-      <div 
-        className="absolute bottom-0 left-0 z-20 pointer-events-none"
-        style={{
-          width: '80px',
-          height: '80px',
-          borderBottom: '2px solid #10B981',
-          borderLeft: '2px solid #10B981',
-          opacity: 0.8
-        }}
-      ></div>
-      <div 
-        className="absolute bottom-0 right-0 z-20 pointer-events-none"
-        style={{
-          width: '80px',
-          height: '80px',
-          borderBottom: '2px solid #10B981',
-          borderRight: '2px solid #10B981',
-          opacity: 0.8
-        }}
-      ></div>
+
       
       <BackgroundBeams />
       <GridBackground />
