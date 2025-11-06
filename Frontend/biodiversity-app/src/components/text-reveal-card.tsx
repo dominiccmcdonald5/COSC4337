@@ -37,7 +37,7 @@ export const TextRevealCard = ({
         <div className="bg-[#323238]  h-40  absolute inset-0 z-10  flex items-center justify-center text-white font-mono font-bold text-4xl">
           <span>{text}</span>
         </div>
-        <div className="bg-gradient-to-r from-green-500 to-green-300  h-40 absolute inset-0  z-0  flex items-center justify-center text-black font-mono font-bold text-4xl">
+        <div className="bg-gradient-to-r from-green-500 to-green-300  h-40 absolute inset-0  z-0  flex items-center justify-center text-white font-mono font-bold text-4xl">
           <span>{revealText}</span>
         </div>
       </div>

@@ -5,26 +5,13 @@ import { motion } from 'framer-motion';
 import { BackgroundBeams } from './components/background-gradient';
 import { Button } from './components/moving-border';
 import { FileUpload } from './components/file-upload';
-import { HoverEffect } from './components/card-hover-effect';
 import { Spotlight } from './components/spotlight';
-import { TextRevealCard } from './components/text-reveal-card';
-import { LampContainer } from './components/lamp';
 import { FloatingNav } from './components/floating-nav';
 import { GridBackground } from './components/grid-background';
 import { EnhancedLoading } from './components/enhanced-loading';
 import { WavyBackground } from './components/wavy-background';
 
-// Icons
-import { 
-  IconMicrophone, 
-  IconChartBar, 
-  IconEye, 
-  IconFileMusic,
-  IconBrain,
-  IconAnalyze,
-  IconGraph,
-  IconHeart as IconHeatmap
-} from '@tabler/icons-react';
+
 
 interface MockAnalysisResult {
   biodiversity_score: number;
@@ -112,38 +99,7 @@ function App() {
     return '[ CRITICAL ECOSYSTEM STATE ]';
   };
 
-  const features = [
-    {
-      title: "AI Audio Analysis",
-      description: "Deep learning algorithms analyze ecosystem audio to extract biodiversity patterns and acoustic signatures.",
-      icon: <IconBrain className="h-8 w-8 text-green-400" />,
-    },
-    {
-      title: "ADI Scoring", 
-      description: "Acoustic Diversity Index calculation providing quantitative biodiversity assessment from 0-100%.",
-      icon: <IconChartBar className="h-8 w-8 text-green-400" />,
-    },
-    {
-      title: "Spectrogram Analysis",
-      description: "Mel-frequency spectrograms reveal acoustic patterns, species calls, and environmental soundscapes.",
-      icon: <IconFileMusic className="h-8 w-8 text-green-400" />,
-    },
-    {
-      title: "Distribution Mapping",
-      description: "Interactive Plotly visualizations show score distributions with ecosystem benchmark comparisons.",
-      icon: <IconGraph className="h-8 w-8 text-green-400" />,
-    },
-    {
-      title: "Grad-CAM Heatmaps",
-      description: "Gradient-weighted Class Activation Mapping highlights which audio features drive AI predictions.",
-      icon: <IconHeatmap className="h-8 w-8 text-green-400" />,
-    },
-    {
-      title: "Real-time Processing",
-      description: "High-performance analysis pipeline with live progress tracking and instant result generation.",
-      icon: <IconEye className="h-8 w-8 text-green-400" />,
-    },
-  ];
+
 
   return (
     <WavyBackground 
@@ -282,7 +238,7 @@ function App() {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              BIODIVERSITY
+              BIOACOUSTICS
             </span>
             <br />
             <span style={{ color: 'white' }}>ANALYZER</span>
@@ -294,7 +250,7 @@ function App() {
                 fontFamily: 'monospace'
               }}
             >
-              [ AI-POWERED ECOSYSTEM ANALYSIS ]
+              [ MACHINE-LEARNING ECOSYSTEM ANALYSIS ]
             </div>
           </h1>
           <p 
@@ -306,55 +262,11 @@ function App() {
               lineHeight: '1.6'
             }}
           >
-            Advanced machine learning algorithms analyze ecosystem audio recordings to quantify biodiversity patterns and acoustic signatures.
+            Use advanced machine learning algorithms to analyze an ecosystem's audio recordings to quantify the biodiversity patterns and acoustic signatures.
           </p>
         </motion.div>
 
-        {/* Features Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{ 
-            marginBottom: '4rem',
-            padding: '2rem 0'
-          }}
-        >
-          <h2 
-            style={{
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              marginBottom: '3rem',
-              color: '#10B981',
-              fontFamily: 'monospace'
-            }}
-          >
-            // ANALYSIS CAPABILITIES
-          </h2>
-          <HoverEffect items={features} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3" />
-          
-          {/* Interactive Text Reveal */}
-          <div className="flex justify-center mt-12">
-            <TextRevealCard
-              text="ECOSYSTEM"
-              revealText="ANALYZED"
-              className="w-[600px] h-[200px] bg-black border-green-400/30"
-            >
-              <p 
-                style={{
-                  color: '#10B981',
-                  fontFamily: 'monospace',
-                  fontSize: '0.9rem',
-                  marginTop: '1rem',
-                  textAlign: 'center'
-                }}
-              >
-                Hover to see AI magic in action
-              </p>
-            </TextRevealCard>
-          </div>
-        </motion.div>
+
 
         {/* Upload Section */}
         <motion.div

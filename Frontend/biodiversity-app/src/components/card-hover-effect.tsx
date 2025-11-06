@@ -8,8 +8,8 @@ export const HoverEffect = ({
   className,
 }: {
   items: {
-    title: string;
-    description: string;
+    title: React.ReactNode;
+    description: React.ReactNode;
     icon?: React.ReactNode;
   }[];
   className?: string;
@@ -89,7 +89,7 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
+    <h4 className={cn("font-bold tracking-wide", className)} style={{ color: 'white' }}>
       {children}
     </h4>
   );
@@ -105,9 +105,10 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "text-zinc-400 tracking-wide leading-relaxed text-sm",
+        "tracking-wide leading-relaxed text-sm",
         className
       )}
+      style={{ color: 'white' }}
     >
       {children}
     </p>
