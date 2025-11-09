@@ -2,7 +2,7 @@
 
 This project analyzes ecosystem biodiversity from audio recordings using AI-powered acoustic analysis.
 
-## Project Structure
+## Project Structure:
 
 ```
 COSC4337/
