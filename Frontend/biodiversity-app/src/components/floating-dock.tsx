@@ -90,33 +90,24 @@ const FloatingDockDesktop = ({
   items: { title: string; icon: React.ReactNode; href: string }[];
   className?: string;
 }) => {
-  let mouseX = 0;
-  
   return (
     <motion.div
-      onMouseMove={(e) => (mouseX = e.pageX)}
       className={cn(
         "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
         className
       )}
     >
       {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} />
+        <IconContainer key={item.title} icon={item.icon} />
       ))}
     </motion.div>
   );
 };
 
 function IconContainer({
-  mouseX,
-  title,
   icon,
-  href,
 }: {
-  mouseX: number;
-  title: string;
   icon: React.ReactNode;
-  href: string;
 }) {
   return (
     <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative">
