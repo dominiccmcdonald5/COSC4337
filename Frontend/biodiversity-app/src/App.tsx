@@ -165,13 +165,19 @@ function App() {
       />
       
       <div 
-        className="relative z-50 mx-auto px-8 w-full"
         style={{ 
-          maxWidth: '1400px',
+          width: '100%',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
           position: 'relative',
           zIndex: 50,
           paddingTop: '4rem',
-          paddingBottom: '3rem'
+          paddingBottom: '3rem',
+          paddingLeft: '1rem',
+          paddingRight: '1rem'
         }}
       >
         {/* Header */}
@@ -179,19 +185,22 @@ function App() {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center relative z-50"
           style={{ 
             marginBottom: '4rem',
-            padding: '2rem 0',
-            marginTop: '2rem'
+            padding: '2rem 1rem',
+            marginTop: '2rem',
+            textAlign: 'center',
+            width: '100%',
+            maxWidth: '1200px'
           }}
         >
           <h1 
-            className="font-bold"
             style={{
-              fontSize: '4rem',
+              fontSize: 'clamp(2.5rem, 6vw, 4rem)',
               marginBottom: '2rem',
-              lineHeight: '1.1'
+              lineHeight: '1.1',
+              fontWeight: 'bold',
+              textAlign: 'center'
             }}
           >
             <span style={{
@@ -207,9 +216,10 @@ function App() {
             <div 
               style={{
                 color: '#10B981',
-                fontSize: '1.5rem',
+                fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
                 marginTop: '1rem',
-                fontFamily: 'monospace'
+                fontFamily: 'monospace',
+                textAlign: 'center'
               }}
             >
               [ MACHINE-LEARNING ECOSYSTEM ANALYSIS ]
@@ -217,11 +227,13 @@ function App() {
           </h1>
           <p 
             style={{
-              fontSize: '1.2rem',
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
               color: '#D1D5DB',
               maxWidth: '800px',
               margin: '2rem auto 0',
-              lineHeight: '1.6'
+              lineHeight: '1.6',
+              textAlign: 'center',
+              padding: '0 1rem'
             }}
           >
             Use advanced machine learning algorithms to analyze an ecosystem's audio recordings to quantify the biodiversity patterns and acoustic signatures.
@@ -237,11 +249,17 @@ function App() {
           transition={{ duration: 0.8, delay: 0.4 }}
           style={{ 
             marginBottom: '4rem',
-            padding: '2rem 0'
+            padding: '2rem 1rem',
+            width: '100%',
+            maxWidth: '1000px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
           }}
         >
             <div 
               style={{
+                width: '100%',
                 maxWidth: '900px',
                 margin: '0 auto',
                 padding: '2px',
@@ -261,7 +279,7 @@ function App() {
             >
               <h2 
                 style={{
-                  fontSize: '2rem',
+                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: 'bold',
                   marginBottom: '2rem',
                   textAlign: 'center',
@@ -284,7 +302,14 @@ function App() {
                 </motion.div>
               )}
 
-              <div className="mt-6 flex gap-3 justify-center flex-wrap">
+              <div style={{ 
+                marginTop: '1.5rem', 
+                display: 'flex', 
+                gap: '12px', 
+                justifyContent: 'center', 
+                flexWrap: 'wrap',
+                alignItems: 'center'
+              }}>
                 {/* Spotify-Style Analyze Button - Icon Sized */}
                 <button
                   onClick={handleAnalyze}
@@ -357,36 +382,89 @@ function App() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mt-16 space-y-8"
+            style={{ 
+              marginTop: '4rem', 
+              width: '100%',
+              maxWidth: '1200px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '2rem',
+              alignItems: 'center'
+            }}
           >
             {/* 1. Biodiversity Score (Number) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
-              <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
-                <h2 className="text-3xl font-bold mb-8 text-center text-green-400 font-mono">
+            <div style={{
+              width: '100%',
+              maxWidth: '1000px',
+              padding: '2px',
+              background: 'linear-gradient(90deg, #10B981, #34D399, #10B981)',
+              borderRadius: '22px',
+              boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
+            }}>
+              <div style={{
+                background: 'black',
+                borderRadius: '20px',
+                padding: '2rem',
+                border: '1px solid rgba(16, 185, 129, 0.5)'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                  fontWeight: 'bold',
+                  marginBottom: '2rem',
+                  textAlign: 'center',
+                  color: '#10B981',
+                  fontFamily: 'monospace'
+                }}>
                   // OUTPUT 1: BIODIVERSITY SCORE
                 </h2>
                 
-                <div className="text-center">
+                <div style={{ textAlign: 'center' }}>
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.3 }}
-                    className="relative inline-block"
+                    style={{ position: 'relative', display: 'inline-block' }}
                   >
-                    <div className="text-9xl font-bold text-green-400 font-mono relative">
+                    <div style={{
+                      fontSize: 'clamp(4rem, 12vw, 8rem)',
+                      fontWeight: 'bold',
+                      color: '#10B981',
+                      fontFamily: 'monospace',
+                      position: 'relative'
+                    }}>
                       {(analysisResult.biodiversity_score * 100).toFixed(1)}
-                      <span className="text-6xl">%</span>
+                      <span style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)' }}>%</span>
                       {/* Neon glow effect */}
-                      <div className="absolute inset-0 text-9xl font-bold text-green-400 blur-lg opacity-50 font-mono">
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        fontSize: 'clamp(4rem, 12vw, 8rem)',
+                        fontWeight: 'bold',
+                        color: '#10B981',
+                        filter: 'blur(8px)',
+                        opacity: 0.5,
+                        fontFamily: 'monospace'
+                      }}>
                         {(analysisResult.biodiversity_score * 100).toFixed(1)}
-                        <span className="text-6xl">%</span>
+                        <span style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)' }}>%</span>
                       </div>
                     </div>
                   </motion.div>
-                  <p className="text-2xl font-semibold text-white mt-4 font-mono">
-                    ADI SCORE: <span className="text-green-400">{analysisResult.adi_score.toFixed(3)}</span>
+                  <p style={{
+                    fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                    fontWeight: '600',
+                    color: 'white',
+                    marginTop: '1rem',
+                    fontFamily: 'monospace'
+                  }}>
+                    ADI SCORE: <span style={{ color: '#10B981' }}>{analysisResult.adi_score.toFixed(3)}</span>
                   </p>
-                  <p className="text-lg text-gray-300 mt-2 font-mono">
+                  <p style={{
+                    fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                    color: '#D1D5DB',
+                    marginTop: '0.5rem',
+                    fontFamily: 'monospace'
+                  }}>
                     {getScoreLabel(analysisResult.biodiversity_score)}
                   </p>
                 </div>
@@ -394,68 +472,212 @@ function App() {
             </div>
 
             {/* 2. Mel Spectrogram (Matplotlib Image) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
-              <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
-                <h3 className="text-2xl font-bold mb-6 text-center text-green-400 font-mono">
+            <div style={{
+              width: '100%',
+              maxWidth: '1000px',
+              padding: '2px',
+              background: 'linear-gradient(90deg, #10B981, #34D399, #10B981)',
+              borderRadius: '22px',
+              boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
+            }}>
+              <div style={{
+                background: 'black',
+                borderRadius: '20px',
+                padding: '2rem',
+                border: '1px solid rgba(16, 185, 129, 0.5)'
+              }}>
+                <h3 style={{
+                  fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+                  fontWeight: 'bold',
+                  marginBottom: '1.5rem',
+                  textAlign: 'center',
+                  color: '#10B981',
+                  fontFamily: 'monospace'
+                }}>
                   // OUTPUT 2: MEL AUDIO SPECTROGRAM
                 </h3>
-                  <div className="text-center">
-                  <div className="bg-gray-900 p-4 rounded-lg border-2 border-green-400/60 shadow-lg shadow-green-400/30 inline-block">
-                    <div className="w-96 h-64 bg-gradient-to-r from-black via-green-900 to-black rounded border border-green-400/40 flex items-center justify-center text-green-400 font-mono">
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{
+                    background: '#1F2937',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    border: '2px solid rgba(16, 185, 129, 0.6)',
+                    boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
+                    display: 'inline-block',
+                    maxWidth: '100%'
+                  }}>
+                    <div style={{
+                      width: 'clamp(300px, 80vw, 400px)',
+                      height: 'clamp(200px, 50vw, 250px)',
+                      background: 'linear-gradient(90deg, black, #064E3B, black)',
+                      borderRadius: '4px',
+                      border: '1px solid rgba(16, 185, 129, 0.4)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#10B981',
+                      fontFamily: 'monospace',
+                      textAlign: 'center',
+                      fontSize: 'clamp(0.8rem, 2vw, 1rem)'
+                    }}>
                       [SPECTROGRAM VISUALIZATION]<br />
                       Frequency vs Time Analysis<br />
                       {analysisResult.filename}
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-400 mt-4 text-center font-mono">
+                <p style={{
+                  fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                  color: '#9CA3AF',
+                  marginTop: '1rem',
+                  textAlign: 'center',
+                  fontFamily: 'monospace'
+                }}>
                   Mel-frequency spectrogram showing acoustic patterns and frequency distributions
                 </p>
               </div>
             </div>
 
             {/* 3. Distribution Plot (Plotly Interactive) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
-              <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
-                <h3 className="text-2xl font-bold mb-6 text-center text-green-400 font-mono">
+            <div style={{
+              width: '100%',
+              maxWidth: '1000px',
+              padding: '2px',
+              background: 'linear-gradient(90deg, #10B981, #34D399, #10B981)',
+              borderRadius: '22px',
+              boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
+            }}>
+              <div style={{
+                background: 'black',
+                borderRadius: '20px',
+                padding: '2rem',
+                border: '1px solid rgba(16, 185, 129, 0.5)'
+              }}>
+                <h3 style={{
+                  fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+                  fontWeight: 'bold',
+                  marginBottom: '1.5rem',
+                  textAlign: 'center',
+                  color: '#10B981',
+                  fontFamily: 'monospace'
+                }}>
                   // OUTPUT 3: SCORE DISTRIBUTION
                 </h3>
-                <div className="text-center">
-                  <div className="bg-gray-900 p-6 rounded-lg border-2 border-green-400/60 shadow-lg shadow-green-400/30">
-                    <div className="w-full h-80 bg-gradient-to-b from-green-900/30 to-black rounded border border-green-400/40 flex flex-col items-center justify-center text-green-400 font-mono">
-                      <div className="text-lg mb-4">[INTERACTIVE PLOTLY CHART]</div>
-                      <div className="grid grid-cols-5 gap-2 mb-4">
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{
+                    background: '#1F2937',
+                    padding: '1.5rem',
+                    borderRadius: '8px',
+                    border: '2px solid rgba(16, 185, 129, 0.6)',
+                    boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
+                    maxWidth: '100%',
+                    margin: '0 auto'
+                  }}>
+                    <div style={{
+                      width: '100%',
+                      height: 'clamp(250px, 60vw, 320px)',
+                      background: 'linear-gradient(to bottom, rgba(6, 78, 59, 0.3), black)',
+                      borderRadius: '4px',
+                      border: '1px solid rgba(16, 185, 129, 0.4)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#10B981',
+                      fontFamily: 'monospace'
+                    }}>
+                      <div style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', marginBottom: '1rem' }}>[INTERACTIVE PLOTLY CHART]</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', marginBottom: '1rem' }}>
                         {[0.1, 0.3, 0.5, 0.8, 0.95].map((val, i) => (
-                          <div key={i} className="text-xs text-center">
-                            <div className={`h-16 w-8 ${val === Math.round(analysisResult.biodiversity_score * 10) / 10 ? 'bg-green-400' : 'bg-green-800'} rounded mb-1`}></div>
+                          <div key={i} style={{ fontSize: '0.75rem', textAlign: 'center' }}>
+                            <div style={{
+                              height: '64px',
+                              width: '32px',
+                              backgroundColor: val === Math.round(analysisResult.biodiversity_score * 10) / 10 ? '#10B981' : '#065F46',
+                              borderRadius: '2px',
+                              marginBottom: '4px'
+                            }}></div>
                             {val}
                           </div>
                         ))}
                       </div>
-                      <div className="text-sm">
-                        Your Score: <span className="text-green-400 font-bold">{analysisResult.biodiversity_score.toFixed(2)}</span>
+                      <div style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
+                        Your Score: <span style={{ color: '#10B981', fontWeight: 'bold' }}>{analysisResult.biodiversity_score.toFixed(2)}</span>
                       </div>
-                      <div className="text-xs mt-2 text-gray-400">Hover for ecosystem benchmarks</div>
+                      <div style={{ fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)', marginTop: '0.5rem', color: '#9CA3AF' }}>Hover for ecosystem benchmarks</div>
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-400 mt-4 text-center font-mono">
+                <p style={{
+                  fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                  color: '#9CA3AF',
+                  marginTop: '1rem',
+                  textAlign: 'center',
+                  fontFamily: 'monospace'
+                }}>
                   Interactive distribution with ecosystem benchmarks and hover data
                 </p>
               </div>
             </div>
 
             {/* 4. Grad-CAM Heatmap (Matplotlib Image) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
-              <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
-                <h3 className="text-2xl font-bold mb-6 text-center text-green-400 font-mono">
+            <div style={{
+              width: '100%',
+              maxWidth: '1000px',
+              padding: '2px',
+              background: 'linear-gradient(90deg, #10B981, #34D399, #10B981)',
+              borderRadius: '22px',
+              boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
+            }}>
+              <div style={{
+                background: 'black',
+                borderRadius: '20px',
+                padding: '2rem',
+                border: '1px solid rgba(16, 185, 129, 0.5)'
+              }}>
+                <h3 style={{
+                  fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
+                  fontWeight: 'bold',
+                  marginBottom: '1.5rem',
+                  textAlign: 'center',
+                  color: '#10B981',
+                  fontFamily: 'monospace'
+                }}>
                   // OUTPUT 4: GRAD-CAM HEATMAP
                 </h3>
-                <div className="text-center">
-                  <div className="bg-gray-900 p-4 rounded-lg border-2 border-green-400/60 shadow-lg shadow-green-400/30 inline-block">
-                    <div className="w-96 h-64 bg-gradient-to-r from-black via-green-900 to-black rounded border border-green-400/40 flex items-center justify-center text-green-400 font-mono relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-red-500/30 via-yellow-500/20 to-green-500/30 opacity-60"></div>
-                      <div className="relative z-10 text-center">
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{
+                    background: '#1F2937',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    border: '2px solid rgba(16, 185, 129, 0.6)',
+                    boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
+                    display: 'inline-block',
+                    maxWidth: '100%'
+                  }}>
+                    <div style={{
+                      width: 'clamp(300px, 80vw, 400px)',
+                      height: 'clamp(200px, 50vw, 250px)',
+                      background: 'linear-gradient(90deg, black, #064E3B, black)',
+                      borderRadius: '4px',
+                      border: '1px solid rgba(16, 185, 129, 0.4)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#10B981',
+                      fontFamily: 'monospace',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      textAlign: 'center',
+                      fontSize: 'clamp(0.8rem, 2vw, 1rem)'
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(245, 158, 11, 0.2), rgba(34, 197, 94, 0.3))',
+                        opacity: 0.6
+                      }}></div>
+                      <div style={{ position: 'relative', zIndex: 10 }}>
                         [GRAD-CAM VISUALIZATION]<br />
                         AI Attention Heatmap<br />
                         Feature Importance
@@ -463,30 +685,61 @@ function App() {
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-400 mt-4 text-center font-mono">
+                <p style={{
+                  fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                  color: '#9CA3AF',
+                  marginTop: '1rem',
+                  textAlign: 'center',
+                  fontFamily: 'monospace'
+                }}>
                   Gradient-weighted Class Activation Mapping showing AI model focus areas
                 </p>
               </div>
             </div>
 
             {/* System Info */}
-            <div className="max-w-4xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
-              <div className="bg-black rounded-[20px] p-6 border border-green-400/50 shadow-inner">
-                <h3 className="text-xl font-bold mb-4 text-center text-green-400 font-mono">
+            <div style={{
+              width: '100%',
+              maxWidth: '800px',
+              padding: '2px',
+              background: 'linear-gradient(90deg, #10B981, #34D399, #10B981)',
+              borderRadius: '22px',
+              boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
+            }}>
+              <div style={{
+                background: 'black',
+                borderRadius: '20px',
+                padding: '1.5rem',
+                border: '1px solid rgba(16, 185, 129, 0.5)'
+              }}>
+                <h3 style={{
+                  fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  textAlign: 'center',
+                  color: '#10B981',
+                  fontFamily: 'monospace'
+                }}>
                   // SYSTEM OUTPUT
                 </h3>
-                <div className="grid grid-cols-2 gap-4 text-sm font-mono">
-                  <div className="text-gray-300">
-                    <span className="text-green-400">FILE:</span> {analysisResult.filename}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '1rem',
+                  fontSize: 'clamp(0.8rem, 2vw, 1rem)',
+                  fontFamily: 'monospace'
+                }}>
+                  <div style={{ color: '#D1D5DB' }}>
+                    <span style={{ color: '#10B981' }}>FILE:</span> {analysisResult.filename}
                   </div>
-                  <div className="text-gray-300">
-                    <span className="text-green-400">DURATION:</span> {analysisResult.duration.toFixed(1)}s
+                  <div style={{ color: '#D1D5DB' }}>
+                    <span style={{ color: '#10B981' }}>DURATION:</span> {analysisResult.duration.toFixed(1)}s
                   </div>
-                  <div className="text-gray-300">
-                    <span className="text-green-400">SAMPLE_RATE:</span> {analysisResult.sample_rate}Hz
+                  <div style={{ color: '#D1D5DB' }}>
+                    <span style={{ color: '#10B981' }}>SAMPLE_RATE:</span> {analysisResult.sample_rate}Hz
                   </div>
-                  <div className="text-gray-300">
-                    <span className="text-green-400">STATUS:</span> ANALYSIS_COMPLETE
+                  <div style={{ color: '#D1D5DB' }}>
+                    <span style={{ color: '#10B981' }}>STATUS:</span> ANALYSIS_COMPLETE
                   </div>
                 </div>
               </div>

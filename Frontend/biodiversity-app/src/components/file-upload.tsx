@@ -51,6 +51,10 @@ export const FileUpload = ({
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
     noClick: true,
+    accept: {
+      'audio/*': ['.wav', '.mp3', '.flac', '.m4a', '.ogg', '.webm'],
+      'video/webm': ['.webm']
+    },
     onDrop: handleFileChange,
     onDropRejected: (error: any) => {
       console.log(error);
@@ -68,7 +72,7 @@ export const FileUpload = ({
           ref={fileInputRef}
           id="file-upload-handle"
           type="file"
-          accept=".wav,.mp3,.flac,.m4a,.ogg,.webm"
+          accept=".wav,.mp3,.flac,.m4a,.ogg,.webm,audio/*,video/webm"
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
