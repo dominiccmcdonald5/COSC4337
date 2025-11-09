@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/dorkd/OneDrive/Desktop/COSC%204337%20Project/COSC4337/Frontend/animal-audio-app/app/layout.tsx"],"sourcesContent":["import type { Metadata } from 'next'\r\nimport './globals.css'\r\n\r\nexport const metadata: Metadata = {\r\n  title: 'Ecosystem Biodiversity Analyzer',\r\n  description: 'AI-powered acoustic analysis for ecosystem biodiversity assessment',\r\n}\r\n\r\nexport default function RootLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode\r\n}) {\r\n  return (\r\n    <html lang=\"en\">\r\n      <body className=\"antialiased\">\r\n        {children}\r\n      </body>\r\n    </html>\r\n  )\r\n}"],"names":[],"mappings":";;;;;;;;;AAGO,MAAM,WAAqB;IAChC,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EACjC,QAAQ,EAGT;IACC,qBACE,8UAAC;QAAK,MAAK;kBACT,cAAA,8UAAC;YAAK,WAAU;sBACb;;;;;;;;;;;AAIT","debugId":null}},
-    {"offset": {"line": 38, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/dorkd/OneDrive/Desktop/COSC%204337%20Project/COSC4337/Frontend/animal-audio-app/node_modules/next/src/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = (\n  require('../../module.compiled') as typeof import('../../module.compiled')\n).vendored['react-rsc']!.ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":"AAAAA,OAAOC,OAAO,GACZC,QAAQ,kMACRC,QAAQ,CAAC,YAAY,CAAEC,kBAAkB","ignoreList":[0],"debugId":null}}]
-}

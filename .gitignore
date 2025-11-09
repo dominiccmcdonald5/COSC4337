@@ -7,6 +7,8 @@ node_modules/
 dist/
 build/
 .next/
+*/.next/
+**/.next/
 out/
 
 # Environment variables
