@@ -72,8 +72,9 @@ export const FileUpload = ({
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
-        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
-          <GridPattern />
+        <div className="absolute inset-0 opacity-20">
+          {/* Subtle gradient background instead of grid */}
+          <div className="absolute inset-0 bg-linear-to-br from-gray-800/20 to-gray-900/20 rounded-lg"></div>
         </div>
         <div className="flex flex-col items-center justify-center">
           <p className="relative z-20 font-sans font-bold text-base mb-6" style={{ color: 'white' }}>
@@ -107,8 +108,7 @@ export const FileUpload = ({
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
-                    "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
-                    "shadow-sm"
+                    "relative overflow-hidden z-40 bg-gray-800/50 backdrop-blur-sm border border-gray-600 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md"
                   )}
                 >
                   <div className="flex justify-between w-full items-center gap-4">
@@ -160,8 +160,7 @@ export const FileUpload = ({
                   damping: 20,
                 }}
                 className={cn(
-                  "relative group-hover/file:shadow-2xl z-40 bg-white dark:bg-neutral-900 flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md",
-                  "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
+                  "relative z-40 bg-transparent border-2 border-dashed border-gray-400 hover:border-[#10B981] transition-colors duration-200 flex items-center justify-center h-32 mt-4 w-full max-w-32 mx-auto rounded-md"
                 )}
               >
                 {isDragActive ? (
@@ -174,16 +173,9 @@ export const FileUpload = ({
                     <IconUpload className="h-4 w-4 text-white" />
                   </motion.p>
                 ) : (
-                  <IconUpload className="h-4 w-4 text-white" />
+                  <IconUpload className="h-4 w-4 text-gray-400 hover:text-[#10B981] transition-colors duration-200" />
                 )}
               </motion.div>
-            )}
-
-            {!files.length && (
-              <motion.div
-                variants={secondaryVariant}
-                className="absolute opacity-0 border border-dashed border-sky-400 inset-0 z-30 bg-transparent flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md"
-              ></motion.div>
             )}
           </div>
         </div>

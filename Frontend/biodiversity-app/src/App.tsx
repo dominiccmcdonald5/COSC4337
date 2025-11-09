@@ -357,10 +357,10 @@ function App() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mt-16 space-y-8"
+            className="mt-16 space-y-8 w-full flex flex-col items-center"
           >
             {/* 1. Biodiversity Score (Number) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
+            <div className="w-full max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
               <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
                 <h2 className="text-3xl font-bold mb-8 text-center text-green-400 font-mono">
                   // OUTPUT 1: BIODIVERSITY SCORE
@@ -394,7 +394,7 @@ function App() {
             </div>
 
             {/* 2. Mel Spectrogram (Matplotlib Image) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
+            <div className="w-full max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
               <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
                 <h3 className="text-2xl font-bold mb-6 text-center text-green-400 font-mono">
                   // OUTPUT 2: MEL AUDIO SPECTROGRAM
@@ -415,7 +415,7 @@ function App() {
             </div>
 
             {/* 3. Distribution Plot (Plotly Interactive) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
+            <div className="w-full max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
               <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
                 <h3 className="text-2xl font-bold mb-6 text-center text-green-400 font-mono">
                   // OUTPUT 3: SCORE DISTRIBUTION
@@ -446,7 +446,7 @@ function App() {
             </div>
 
             {/* 4. Grad-CAM Heatmap (Matplotlib Image) */}
-            <div className="max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
+            <div className="w-full max-w-6xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
               <div className="bg-black rounded-[20px] p-8 border border-green-400/50 shadow-inner">
                 <h3 className="text-2xl font-bold mb-6 text-center text-green-400 font-mono">
                   // OUTPUT 4: GRAD-CAM HEATMAP
@@ -470,7 +470,7 @@ function App() {
             </div>
 
             {/* System Info */}
-            <div className="max-w-4xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
+            <div className="w-full max-w-4xl mx-auto p-0.5 bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-[22px] shadow-lg shadow-green-400/40">
               <div className="bg-black rounded-[20px] p-6 border border-green-400/50 shadow-inner">
                 <h3 className="text-xl font-bold mb-4 text-center text-green-400 font-mono">
                   // SYSTEM OUTPUT
