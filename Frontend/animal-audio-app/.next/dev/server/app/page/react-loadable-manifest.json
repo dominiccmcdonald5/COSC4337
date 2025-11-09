@@ -1,0 +1,10 @@
+{
+  "[project]/OneDrive/Desktop/COSC 4337 Project/COSC4337/Frontend/animal-audio-app/node_modules/react-plotly.js/react-plotly.js [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/OneDrive/Desktop/COSC 4337 Project/COSC4337/Frontend/animal-audio-app/node_modules/react-plotly.js/react-plotly.js [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/eec47_plotly_js_dist_plotly_2fc603c3.js",
+      "static/chunks/eec47_11c237ee._.js",
+      "static/chunks/eec47_react-plotly_js_react-plotly_3fd5dc90.js"
+    ]
+  }
+}
