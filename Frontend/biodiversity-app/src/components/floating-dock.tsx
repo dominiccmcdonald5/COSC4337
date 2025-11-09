@@ -94,7 +94,9 @@ const FloatingDockDesktop = ({
   
   return (
     <motion.div
-      onMouseMove={(e) => (mouseX = e.pageX)}
+      onMouseMove={(e) => {
+        mouseX = e.pageX;
+      }}
       className={cn(
         "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
         className
@@ -108,10 +110,10 @@ const FloatingDockDesktop = ({
 };
 
 function IconContainer({
-  mouseX,
-  title,
+  mouseX: _mouseX,
+  title: _title,
   icon,
-  href,
+  href: _href,
 }: {
   mouseX: number;
   title: string;
