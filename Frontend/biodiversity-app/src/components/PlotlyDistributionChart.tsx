@@ -151,13 +151,13 @@ export const PlotlyDistributionChart: React.FC<PlotlyDistributionChartProps> = (
       displayModeBar: true,
       displaylogo: false,
       modeBarButtonsToRemove: [
-        'pan2d',
-        'lasso2d',
-        'select2d',
-        'autoScale2d',
-        'hoverClosestCartesian',
-        'hoverCompareCartesian',
-        'toggleSpikelines'
+        'pan2d' as const,
+        'lasso2d' as const,
+        'select2d' as const,
+        'autoScale2d' as const,
+        'hoverClosestCartesian' as const,
+        'hoverCompareCartesian' as const,
+        'toggleSpikelines' as const
       ],
       responsive: true
     };

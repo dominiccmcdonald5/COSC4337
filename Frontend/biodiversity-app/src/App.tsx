@@ -714,7 +714,6 @@ function App() {
                   <GradCAMHeatmap 
                     heatmapImage={analysisResult.gradcam_image}
                     biodiversityScore={analysisResult.biodiversity_score}
-                    filename={analysisResult.filename}
                   />
                 </div>
               </div>

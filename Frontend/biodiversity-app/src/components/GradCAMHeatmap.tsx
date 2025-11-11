@@ -3,14 +3,13 @@ import React from 'react';
 interface GradCAMHeatmapProps {
   heatmapImage?: string;
   biodiversityScore: number;
-  filename: string;
+  filename?: string;  // Make optional and add underscore if needed
   className?: string;
 }
 
 export const GradCAMHeatmap: React.FC<GradCAMHeatmapProps> = ({
   heatmapImage,
   biodiversityScore,
-  filename,
   className = ""
 }) => {
   // Generate a mock heatmap pattern based on biodiversity score
