@@ -1,0 +1,49 @@
+// Temporary test - create a simple test to verify frontend works
+// Add this to a new file for testing: test-connection.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Colab Connection Test</title>
+</head>
+<body>
+    <h1>Test Colab Connection</h1>
+    
+    <div>
+        <label>Test URL:</label>
+        <input type="text" id="testUrl" value="http://127.0.0.1:5000" style="width: 300px;">
+        <button onclick="testConnection()">Test Connection</button>
+    </div>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+    <script>
+        async function testConnection() {
+            const url = document.getElementById('testUrl').value;
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                resultDiv.innerHTML = '🔄 Testing connection...';
+                
+                const response = await fetch(url + '/health', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `✅ Connection successful!<br>Response: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `❌ Connection failed: ${response.status}`;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Connection error: ${error.message}`;
+                console.error('Connection test failed:', error);
+            }
+        }
+    </script>
+</body>
+</html>

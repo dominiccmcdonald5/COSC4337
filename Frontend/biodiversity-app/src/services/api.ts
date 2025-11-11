@@ -1,12 +1,13 @@
-// API service for connecting to the Flask backend
+// API service for connecting to the Flask backend or Google Colab
 import axios from 'axios';
 
-// Backend API configuration
-const API_BASE_URL = 'https://cosc4337.onrender.com';
+// Backend API configuration - Using Google Colab with ngrok
+let API_BASE_URL = 'https://hemathermal-zoological-madalene.ngrok-free.dev'; // Google Colab server via ngrok
+let USE_COLAB = true; // Using Colab server
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL, // Now defaults to Colab URL
   timeout: 120000, // 2 minutes timeout for analysis
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -73,6 +74,33 @@ export interface ApiErrorResponse {
 
 // API service class
 class BiodiversityApiService {
+  
+  /**
+   * Switch to using Google Colab model
+   */
+  switchToColab(_ngrokUrl: string): void {
+    // Don't change URL - keep using the correct one
+    console.log(`🔗 Staying with correct Colab API: ${API_BASE_URL}`);
+  }
+
+  /**
+   * Switch back to Colab backend (fallback method)
+   */
+  switchToRender(): void {
+    // Don't change URL - keep using the correct one
+    console.log(`🔗 Staying with correct Colab API: ${API_BASE_URL}`);
+  }
+
+  /**
+   * Get current API configuration
+   */
+  getCurrentConfig(): { url: string; isColab: boolean } {
+    return {
+      url: API_BASE_URL,
+      isColab: USE_COLAB
+    };
+  }
+
   /**
    * Check if the backend server is healthy
    */

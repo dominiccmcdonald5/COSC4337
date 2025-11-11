@@ -11,6 +11,7 @@ import { EnhancedLoading } from './components/enhanced-loading';
 import { WavyBackground } from './components/wavy-background';
 import PlotlyDistributionChart from './components/PlotlyDistributionChart';
 import GradCAMHeatmap from './components/GradCAMHeatmap';
+import ColabConnector from './components/ColabConnector';
 
 // Import API service
 import { biodiversityApi } from './services/api';
@@ -96,6 +97,10 @@ function App() {
       // Call the real API
       const result = await biodiversityApi.analyzeAudio(selectedFile);
       
+      console.log('🔍 Raw API result:', result);
+      console.log('🔍 Spectrogram B64 exists:', !!result.spectrogram_b64);
+      console.log('🔍 Distribution data exists:', !!result.distribution_data);
+      
       // Transform the result to match our component expectations
       const analysisResult: AnalysisResult = {
         ...result,
@@ -106,6 +111,9 @@ function App() {
       };
 
       console.log('✅ Analysis complete:', analysisResult);
+      console.log('🔍 Final spectrogram_image length:', analysisResult.spectrogram_image?.length || 0);
+      console.log('🔍 Final distribution_data:', analysisResult.distribution_data);
+      
       setAnalysisResult(analysisResult);
       setLoadingMessage('');
 
@@ -350,6 +358,20 @@ function App() {
               >
                 &gt; AUDIO INPUT
               </h2>
+              
+              {/* Add Colab Connector */}
+              <div style={{ marginBottom: '2rem' }}>
+                <ColabConnector 
+                  onConnectionChange={(connected, isColab) => {
+                    setIsBackendConnected(connected);
+                    if (connected && isColab) {
+                      console.log('🧪 Connected to Colab model - real ML predictions enabled');
+                    } else if (connected) {
+                      console.log('🏢 Connected to Render backend - demo mode');
+                    }
+                  }}
+                />
+              </div>
               
               <FileUpload onChange={handleFileSelect} />
 
@@ -752,13 +774,13 @@ function App() {
                   fontFamily: 'monospace'
                 }}>
                   <div style={{ color: '#D1D5DB' }}>
-                    <span style={{ color: '#10B981' }}>SIZE:</span> {analysisResult.file_size_mb}MB
+                    <span style={{ color: '#10B981' }}>SIZE:</span> {analysisResult.file_size_mb || 'N/A'}MB
                   </div>
                   <div style={{ color: '#D1D5DB' }}>
-                    <span style={{ color: '#10B981' }}>DURATION:</span> {analysisResult.duration.toFixed(1)}s
+                    <span style={{ color: '#10B981' }}>DURATION:</span> {analysisResult.duration ? analysisResult.duration.toFixed(1) : 'N/A'}s
                   </div>
                   <div style={{ color: '#D1D5DB' }}>
-                    <span style={{ color: '#10B981' }}>SAMPLE_RATE:</span> {analysisResult.sample_rate}Hz
+                    <span style={{ color: '#10B981' }}>SAMPLE_RATE:</span> {analysisResult.sample_rate || 'N/A'}Hz
                   </div>
                   <div style={{ color: '#D1D5DB' }}>
                     <span style={{ color: '#10B981' }}>STATUS:</span> ANALYSIS_COMPLETE
