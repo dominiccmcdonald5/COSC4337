@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 // Import Aceternity UI components
@@ -9,25 +9,42 @@ import { FloatingNav } from './components/floating-nav';
 import { GridBackground } from './components/grid-background';
 import { EnhancedLoading } from './components/enhanced-loading';
 import { WavyBackground } from './components/wavy-background';
+import PlotlyDistributionChart from './components/PlotlyDistributionChart';
+import GradCAMHeatmap from './components/GradCAMHeatmap';
 
+// Import API service
+import { biodiversityApi } from './services/api';
+import type { BiodiversityAnalysisResult } from './services/api';
 
-
-interface MockAnalysisResult {
-  biodiversity_score: number;
-  adi_score: number;
-  spectrogram_image: string;
-  distribution_data: any;
-  gradcam_image: string;
-  filename: string;
-  duration: number;
-  sample_rate: number;
+interface AnalysisResult extends BiodiversityAnalysisResult {
+  spectrogram_image?: string; // For backward compatibility with existing components
+  gradcam_image?: string; // For backward compatibility with existing components
 }
 
 function App() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [analysisResult, setAnalysisResult] = useState<MockAnalysisResult | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
+  const [isBackendConnected, setIsBackendConnected] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('');
+
+  // Check backend connection on component mount
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const isAvailable = await biodiversityApi.isBackendAvailable();
+        setIsBackendConnected(isAvailable);
+        if (isAvailable) {
+          console.log('✅ Backend connected successfully');
+        }
+      } catch (error) {
+        console.warn('⚠️ Backend connection failed:', error);
+        setIsBackendConnected(false);
+      }
+    };
+    checkBackend();
+  }, []);
 
   const handleFileSelect = (files: File[]) => {
     if (files.length > 0) {
@@ -60,28 +77,45 @@ function App() {
 
     setLoading(true);
     setError('');
+    setLoadingMessage('Uploading and processing audio file...');
 
-    // Mock analysis - simulate processing time
-    setTimeout(() => {
-      // Generate mock results
-      const mockResult: MockAnalysisResult = {
-        biodiversity_score: Math.random() * 0.8 + 0.2, // Random score between 0.2-1.0
-        adi_score: Math.random() * 0.8 + 0.2,
-        spectrogram_image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', // Placeholder
-        gradcam_image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', // Placeholder
-        distribution_data: {
-          x: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
-          y: [10, 15, 25, 30, 20, 15, 10, 8, 5],
-          user_score: Math.random() * 0.8 + 0.2
-        },
-        filename: selectedFile.name,
-        duration: 60.0,
-        sample_rate: 16000
-      };
+    try {
+      // Check if backend is connected
+      if (!isBackendConnected) {
+        setLoadingMessage('Checking backend connection...');
+        const isAvailable = await biodiversityApi.isBackendAvailable();
+        if (!isAvailable) {
+          throw new Error('Backend server is not available. Please make sure the Flask API is running on http://127.0.0.1:5000');
+        }
+        setIsBackendConnected(true);
+      }
+
+      setLoadingMessage('AI analyzing ecosystem patterns...');
+      console.log('📤 Sending file to backend:', selectedFile.name);
+
+      // Call the real API
+      const result = await biodiversityApi.analyzeAudio(selectedFile);
       
-      setAnalysisResult(mockResult);
+      // Transform the result to match our component expectations
+      const analysisResult: AnalysisResult = {
+        ...result,
+        // Map the base64 spectrogram to the expected property name
+        spectrogram_image: result.spectrogram_b64 ? `data:image/png;base64,${result.spectrogram_b64}` : '',
+        // Map the base64 gradcam to the expected property name  
+        gradcam_image: result.gradcam_b64 ? `data:image/png;base64,${result.gradcam_b64}` : ''
+      };
+
+      console.log('✅ Analysis complete:', analysisResult);
+      setAnalysisResult(analysisResult);
+      setLoadingMessage('');
+
+    } catch (error) {
+      console.error('❌ Analysis failed:', error);
+      setError(error instanceof Error ? error.message : 'Analysis failed. Please try again.');
+      setLoadingMessage('');
+    } finally {
       setLoading(false);
-    }, 3000); // 3 second delay to simulate analysis
+    }
   };
 
   const handleReset = () => {
@@ -108,6 +142,33 @@ function App() {
       containerClassName="w-full min-h-screen relative"
       style={{ backgroundColor: '#000000', minHeight: '100vh' }}
     >
+          <div 
+            style={{
+              position: 'fixed',
+              top: '1rem',
+              right: '1rem',
+              zIndex: 100,
+              background: isBackendConnected ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+              border: `1px solid ${isBackendConnected ? '#10B981' : '#EF4444'}`,
+              borderRadius: '8px',
+              padding: '0.5rem 1rem',
+              fontFamily: 'monospace',
+              fontSize: '0.8rem',
+              color: isBackendConnected ? '#10B981' : '#EF4444'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: isBackendConnected ? '#10B981' : '#EF4444',
+                animation: isBackendConnected ? 'none' : 'blink 1s infinite'
+              }}></div>
+              {isBackendConnected ? 'API CONNECTED' : 'API OFFLINE'}
+            </div>
+          </div>
+          
       <FloatingNav />
       
       {/* Neon Green Border Glow - More Prominent */}
@@ -371,7 +432,7 @@ function App() {
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[200]"
             >
-              <EnhancedLoading text="AI ANALYZING ECOSYSTEM..." />
+              <EnhancedLoading text={loadingMessage || "AI ANALYZING ECOSYSTEM..."} />
             </motion.div>
           )}
         </motion.div>
@@ -506,24 +567,37 @@ function App() {
                     display: 'inline-block',
                     maxWidth: '100%'
                   }}>
-                    <div style={{
-                      width: 'clamp(300px, 80vw, 400px)',
-                      height: 'clamp(200px, 50vw, 250px)',
-                      background: 'linear-gradient(90deg, black, #064E3B, black)',
-                      borderRadius: '4px',
-                      border: '1px solid rgba(16, 185, 129, 0.4)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#10B981',
-                      fontFamily: 'monospace',
-                      textAlign: 'center',
-                      fontSize: 'clamp(0.8rem, 2vw, 1rem)'
-                    }}>
-                      [SPECTROGRAM VISUALIZATION]<br />
-                      Frequency vs Time Analysis<br />
-                      {analysisResult.filename}
-                    </div>
+                    {analysisResult.spectrogram_image ? (
+                      <img 
+                        src={analysisResult.spectrogram_image}
+                        alt="Audio Spectrogram"
+                        style={{
+                          maxWidth: '100%',
+                          height: 'auto',
+                          borderRadius: '4px',
+                          border: '1px solid rgba(16, 185, 129, 0.4)'
+                        }}
+                      />
+                    ) : (
+                      <div style={{
+                        width: 'clamp(300px, 80vw, 400px)',
+                        height: 'clamp(200px, 50vw, 250px)',
+                        background: 'linear-gradient(90deg, black, #064E3B, black)',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(16, 185, 129, 0.4)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#10B981',
+                        fontFamily: 'monospace',
+                        textAlign: 'center',
+                        fontSize: 'clamp(0.8rem, 2vw, 1rem)'
+                      }}>
+                        [SPECTROGRAM LOADING...]<br />
+                        Frequency vs Time Analysis<br />
+                        {analysisResult.filename}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <p style={{
@@ -564,49 +638,40 @@ function App() {
                   // OUTPUT 3: SCORE DISTRIBUTION
                 </h3>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{
-                    background: '#1F2937',
-                    padding: '1.5rem',
-                    borderRadius: '8px',
-                    border: '2px solid rgba(16, 185, 129, 0.6)',
-                    boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
-                    maxWidth: '100%',
-                    margin: '0 auto'
-                  }}>
+                  {analysisResult.distribution_data ? (
+                    <PlotlyDistributionChart 
+                      distributionData={analysisResult.distribution_data}
+                      userScore={analysisResult.biodiversity_score}
+                      className="w-full"
+                    />
+                  ) : (
                     <div style={{
-                      width: '100%',
-                      height: 'clamp(250px, 60vw, 320px)',
-                      background: 'linear-gradient(to bottom, rgba(6, 78, 59, 0.3), black)',
-                      borderRadius: '4px',
-                      border: '1px solid rgba(16, 185, 129, 0.4)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#10B981',
-                      fontFamily: 'monospace'
+                      background: '#1F2937',
+                      padding: '1.5rem',
+                      borderRadius: '8px',
+                      border: '2px solid rgba(16, 185, 129, 0.6)',
+                      boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
+                      maxWidth: '100%',
+                      margin: '0 auto'
                     }}>
-                      <div style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', marginBottom: '1rem' }}>[INTERACTIVE PLOTLY CHART]</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', marginBottom: '1rem' }}>
-                        {[0.1, 0.3, 0.5, 0.8, 0.95].map((val, i) => (
-                          <div key={i} style={{ fontSize: '0.75rem', textAlign: 'center' }}>
-                            <div style={{
-                              height: '64px',
-                              width: '32px',
-                              backgroundColor: val === Math.round(analysisResult.biodiversity_score * 10) / 10 ? '#10B981' : '#065F46',
-                              borderRadius: '2px',
-                              marginBottom: '4px'
-                            }}></div>
-                            {val}
-                          </div>
-                        ))}
+                      <div style={{
+                        width: '100%',
+                        height: 'clamp(250px, 60vw, 320px)',
+                        background: 'linear-gradient(to bottom, rgba(6, 78, 59, 0.3), black)',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(16, 185, 129, 0.4)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#10B981',
+                        fontFamily: 'monospace'
+                      }}>
+                        <div style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', marginBottom: '1rem' }}>[LOADING DISTRIBUTION...]</div>
+                        <div style={{ fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)', marginTop: '0.5rem', color: '#9CA3AF' }}>Processing chart data</div>
                       </div>
-                      <div style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                        Your Score: <span style={{ color: '#10B981', fontWeight: 'bold' }}>{analysisResult.biodiversity_score.toFixed(2)}</span>
-                      </div>
-                      <div style={{ fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)', marginTop: '0.5rem', color: '#9CA3AF' }}>Hover for ecosystem benchmarks</div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <p style={{
                   fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
@@ -646,54 +711,12 @@ function App() {
                   // OUTPUT 4: GRAD-CAM HEATMAP
                 </h3>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{
-                    background: '#1F2937',
-                    padding: '1rem',
-                    borderRadius: '8px',
-                    border: '2px solid rgba(16, 185, 129, 0.6)',
-                    boxShadow: '0 4px 16px rgba(16, 185, 129, 0.3)',
-                    display: 'inline-block',
-                    maxWidth: '100%'
-                  }}>
-                    <div style={{
-                      width: 'clamp(300px, 80vw, 400px)',
-                      height: 'clamp(200px, 50vw, 250px)',
-                      background: 'linear-gradient(90deg, black, #064E3B, black)',
-                      borderRadius: '4px',
-                      border: '1px solid rgba(16, 185, 129, 0.4)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#10B981',
-                      fontFamily: 'monospace',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      textAlign: 'center',
-                      fontSize: 'clamp(0.8rem, 2vw, 1rem)'
-                    }}>
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(245, 158, 11, 0.2), rgba(34, 197, 94, 0.3))',
-                        opacity: 0.6
-                      }}></div>
-                      <div style={{ position: 'relative', zIndex: 10 }}>
-                        [GRAD-CAM VISUALIZATION]<br />
-                        AI Attention Heatmap<br />
-                        Feature Importance
-                      </div>
-                    </div>
-                  </div>
+                  <GradCAMHeatmap 
+                    heatmapImage={analysisResult.gradcam_image}
+                    biodiversityScore={analysisResult.biodiversity_score}
+                    filename={analysisResult.filename}
+                  />
                 </div>
-                <p style={{
-                  fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
-                  color: '#9CA3AF',
-                  marginTop: '1rem',
-                  textAlign: 'center',
-                  fontFamily: 'monospace'
-                }}>
-                  Gradient-weighted Class Activation Mapping showing AI model focus areas
-                </p>
               </div>
             </div>
 
@@ -730,7 +753,7 @@ function App() {
                   fontFamily: 'monospace'
                 }}>
                   <div style={{ color: '#D1D5DB' }}>
-                    <span style={{ color: '#10B981' }}>FILE:</span> {analysisResult.filename}
+                    <span style={{ color: '#10B981' }}>SIZE:</span> {analysisResult.file_size_mb}MB
                   </div>
                   <div style={{ color: '#D1D5DB' }}>
                     <span style={{ color: '#10B981' }}>DURATION:</span> {analysisResult.duration.toFixed(1)}s

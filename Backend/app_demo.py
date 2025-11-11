@@ -130,7 +130,95 @@ def create_demo_spectrogram(filepath, biodiversity_score):
         logger.error(f"Error creating spectrogram: {e}")
         return None
 
+def create_gradcam_heatmap(biodiversity_score):
+    """Create a mock Grad-CAM heatmap visualization"""
+    try:
+        fig, ax = plt.subplots(figsize=(8, 5))
+        
+        # Create base heatmap data
+        height, width = 50, 80
+        
+        # Generate heatmap based on biodiversity score
+        np.random.seed(42)  # Consistent results
+        
+        # Base attention map
+        attention_map = np.zeros((height, width))
+        
+        # Add attention hotspots based on biodiversity score
+        n_hotspots = int(biodiversity_score * 15) + 5  # 5-20 hotspots
+        
+        for i in range(n_hotspots):
+            # Random hotspot location
+            center_x = np.random.randint(5, width - 5)
+            center_y = np.random.randint(5, height - 5)
+            
+            # Create gaussian-like hotspot
+            intensity = biodiversity_score * np.random.uniform(0.5, 1.0)
+            radius = np.random.uniform(3, 8)
+            
+            y, x = np.ogrid[:height, :width]
+            mask = (x - center_x)**2 + (y - center_y)**2 <= radius**2
+            
+            # Apply gaussian decay
+            for yi in range(height):
+                for xi in range(width):
+                    dist = np.sqrt((xi - center_x)**2 + (yi - center_y)**2)
+                    if dist <= radius:
+                        attention_map[yi, xi] += intensity * np.exp(-dist**2 / (2 * (radius/3)**2))
+        
+        # Normalize to 0-1
+        if attention_map.max() > 0:
+            attention_map = attention_map / attention_map.max()
+        
+        # Create the heatmap
+        im = ax.imshow(attention_map, cmap='hot', interpolation='bicubic', aspect='auto')
+        
+        # Add overlay grid for scientific look
+        ax.set_xticks(np.arange(0, width, 10))
+        ax.set_yticks(np.arange(0, height, 5))
+        ax.grid(True, alpha=0.3, color='cyan', linewidth=0.5)
+        
+        # Styling
+        ax.set_xlabel('Time Frames', color='white', fontsize=10)
+        ax.set_ylabel('Frequency Bins', color='white', fontsize=10)
+        ax.set_title(f'Grad-CAM Attention Map - Score: {biodiversity_score:.3f}', 
+                    color='white', fontsize=12, pad=20)
+        
+        # Color bar
+        cbar = plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+        cbar.set_label('Attention Intensity', color='white', fontsize=9)
+        cbar.ax.tick_params(colors='white', labelsize=8)
+        
+        # Set background
+        fig.patch.set_facecolor('black')
+        ax.set_facecolor('black')
+        ax.tick_params(colors='white', labelsize=8)
+        
+        # Save to base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', bbox_inches='tight', dpi=150, 
+                   facecolor='black', edgecolor='none')
+        plt.close(fig)
+        
+        buf.seek(0)
+        img_b64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+        
+        return img_b64
+        
+    except Exception as e:
+        logger.error(f"Error creating Grad-CAM heatmap: {e}")
+        return None
+
 def get_benchmark_data():
+    """Get benchmark data for comparison"""
+    benchmarks = {
+        'urban_low': 0.1,
+        'urban_park': 0.3,
+        'forest_edge': 0.5,
+        'primary_forest': 0.8,
+        'pristine_ecosystem': 0.95
+    }
+    return benchmarks
     """Get benchmark data for comparison"""
     benchmarks = {
         'urban_low': 0.1,
@@ -168,15 +256,15 @@ def create_distribution_data(user_score, benchmarks):
     
     plot_data = {
         'histogram': {
-            'x': bin_centers.tolist(),
-            'y': hist_counts.tolist(),
+            'x': [float(x) for x in bin_centers.tolist()],
+            'y': [int(y) for y in hist_counts.tolist()],
             'type': 'bar',
             'name': 'Score Distribution',
             'marker': {'color': 'lightblue', 'opacity': 0.7}
         },
         'user_score': {
-            'x': [user_score, user_score],
-            'y': [0, max(hist_counts) if len(hist_counts) > 0 else 100],
+            'x': [float(user_score), float(user_score)],
+            'y': [0, int(max(hist_counts)) if len(hist_counts) > 0 else 100],
             'type': 'scatter',
             'mode': 'lines',
             'name': 'Your Recording',
@@ -184,8 +272,8 @@ def create_distribution_data(user_score, benchmarks):
         },
         'benchmarks': [
             {
-                'x': [score, score],
-                'y': [0, max(hist_counts) * 0.8 if len(hist_counts) > 0 else 80],
+                'x': [float(score), float(score)],
+                'y': [0, int(max(hist_counts) * 0.8) if len(hist_counts) > 0 else 80],
                 'type': 'scatter',
                 'mode': 'lines',
                 'name': label.replace('_', ' ').title(),
@@ -228,6 +316,10 @@ def analyze_audio():
             logger.info("Creating spectrogram plot...")
             spectrogram_b64 = create_demo_spectrogram(temp_path, biodiversity_score)
             
+            # Create Grad-CAM heatmap
+            logger.info("Creating Grad-CAM heatmap...")
+            gradcam_b64 = create_gradcam_heatmap(biodiversity_score)
+            
             # Get benchmark data
             benchmarks = get_benchmark_data()
             
@@ -238,17 +330,18 @@ def analyze_audio():
             # Get file info
             file_size = os.path.getsize(temp_path)
             
-            # Prepare response
+            # Prepare response - ensure all values are JSON serializable
             response = {
                 'biodiversity_score': float(biodiversity_score),
                 'adi_score': float(biodiversity_score),  # Same for demo
                 'spectrogram_b64': spectrogram_b64,
+                'gradcam_b64': gradcam_b64,
                 'distribution_data': distribution_data,
-                'benchmarks': benchmarks,
-                'filename': filename,
-                'duration': 60.0,  # Assumed duration for demo
-                'sample_rate': 16000,  # Assumed sample rate for demo
-                'file_size_mb': round(file_size / (1024 * 1024), 2)
+                'benchmarks': {k: float(v) for k, v in benchmarks.items()},
+                'filename': str(filename),
+                'duration': float(60.0),  # Assumed duration for demo
+                'sample_rate': int(16000),  # Assumed sample rate for demo
+                'file_size_mb': float(round(file_size / (1024 * 1024), 2))
             }
             
             logger.info(f"Analysis complete. Score: {biodiversity_score:.3f}")
