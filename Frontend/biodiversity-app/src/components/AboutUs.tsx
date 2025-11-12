@@ -55,28 +55,22 @@ const GridBackground = () => {
 
 const teamMembers = [
   {
-    name: "Team Member 1",
-    role: "AI/ML Engineer",
+    name: "Dylan Berens",
+    role: "Machine Learning Engineer",
     description: "Specializes in machine learning algorithms for bioacoustic analysis and neural network architecture design.",
     skills: ["Python", "TensorFlow", "Signal Processing", "Deep Learning"]
   },
   {
-    name: "Team Member 2", 
-    role: "Full-Stack Developer",
-    description: "Focuses on web application development, API design, and user interface creation.",
-    skills: ["React", "Node.js", "TypeScript", "UI/UX Design"]
+    name: "Shruthi Yenamagandla", 
+    role: "CNN Architect",
+    description: "Focuses on the implementation of the CNN model for the bioacoustics analysis.",
+    skills: ["Python", "TensorFlow/Keras", "Librosa", "Google Colab"]
   },
   {
-    name: "Team Member 3",
-    role: "Data Scientist",
-    description: "Expert in data analysis, visualization, and statistical modeling for biodiversity metrics.",
-    skills: ["R", "Python", "Data Visualization", "Statistical Analysis"]
-  },
-  {
-    name: "Team Member 4",
-    role: "Research Specialist",
-    description: "Brings domain expertise in ecology, bioacoustics, and environmental conservation research.",
-    skills: ["Bioacoustics", "Ecology", "Research Methods", "Conservation Biology"]
+    name: "Dominic McDonald",
+    role: "Data Science Web Master",
+    description: "Developed the User Interface and integrated the API's for bioacoustics analysis.",
+    skills: ["TypeScript", "Python", "Vite", "TailwindCSS"]
   }
 ];
 
