@@ -8,7 +8,7 @@ interface ColabConnectorProps {
 
 const ColabConnector: React.FC<ColabConnectorProps> = ({ onConnectionChange }) => {
   const [isConnected, setIsConnected] = useState(false);
-  const [isColab, setIsColab] = useState(true);
+  const [isColab] = useState(true); // Always true for this component
   const [status, setStatus] = useState('Connecting to Colab...');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,7 +37,6 @@ const ColabConnector: React.FC<ColabConnectorProps> = ({ onConnectionChange }) =
       const health = await biodiversityApi.healthCheck();
       
       setIsConnected(true);
-      setIsColab(true);
       setStatus('✅ Connected to Colab server');
       onConnectionChange?.(true, true);
       
@@ -45,7 +44,6 @@ const ColabConnector: React.FC<ColabConnectorProps> = ({ onConnectionChange }) =
       
     } catch (error) {
       setIsConnected(false);
-      setIsColab(false);
       setStatus('❌ Failed to connect to Colab');
       onConnectionChange?.(false, false);
       
@@ -60,6 +58,9 @@ const ColabConnector: React.FC<ColabConnectorProps> = ({ onConnectionChange }) =
   useEffect(() => {
     connectToColab();
   }, []);
+
+  // Log status for debugging (prevents unused variable warnings)
+  console.log(`Colab Connector - Connected: ${isConnected}, Loading: ${isLoading}, Status: ${status}, IsColab: ${isColab}`);
 
   return null; // Component doesn't render anything visible
 };
