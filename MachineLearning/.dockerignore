@@ -1,0 +1,21 @@
+# ignore git history (massive)
+.git/
+.gitignore
+
+# ignore python cache
+__pycache__/
+*.pyc
+
+# ignore local virtual environments
+venv/
+env/
+
+# ignore jupyter notebooks (not needed for production app)
+*.ipynb
+.ipynb_checkpoints/
+
+# ignore large raw data folders (if exist locally)
+/rfcx_local_data/
+
+# ignore the macos junk
+.DS_Store
